@@ -2,10 +2,10 @@ import numpy as np
 
 
 def sigmoid(z):
-    return 1.0 / (1.0 + np.exp(-z))
+    return 1 / (1 + np.exp(-z))
 
 
-def deriv_sigmoid(x):
+def deriv_sigmoid(x):  ##Derativite of the Sigmoid function
     fx = sigmoid(x)
     return fx * (1 - fx)
 
@@ -45,9 +45,11 @@ class MyNeuralNetwork(object):
         '''this function is taking an object of itself and x (input)
         we have an input of height and weight, for a forward pass we
         pass inputs to the network. '''
-        h1 = sigmoid((self.w1 * x[0]) + (self.w2 * x[1]) + (self.b1))
+        h1 = sigmoid((self.w1 * x[0]) + (self.w2 * x[1]) + (
+            self.b1))  # first neuron in the first hidden layer, #2inputs therefore we do twice
         h2 = sigmoid((self.w3 * x[0]) + (self.w4 * x[1]) + (self.b2))
         o1 = sigmoid((self.w5 * h1) + (self.w6 * h2) + (self.b3))
+        return o1
 
     def train(self, data, all_y_trues):
         '''-Data is a (n* 2(weight & height)) numpy array, n = number of samples in the dataset.
@@ -81,7 +83,7 @@ class MyNeuralNetwork(object):
                 d_ypred_d_h2 = self.w6 * deriv_sigmoid(sum_o1)
 
                 # neuron h1
-                d_h1_d_w1 = x[0] * deriv_sigmoid(sum_h2)
+                d_h1_d_w1 = x[0] * deriv_sigmoid(sum_h1)
                 d_h1_d_w2 = x[1] * deriv_sigmoid(sum_h1)
                 d_h1_d_b1 = deriv_sigmoid(sum_h1)
 
@@ -135,4 +137,5 @@ all_y_trues = np.array([
 network = MyNeuralNetwork()
 network.train(data, all_y_trues)
 
-emily = np.array([-7, -3])
+##emily = np.array([-7, -3])
+print (emily)
